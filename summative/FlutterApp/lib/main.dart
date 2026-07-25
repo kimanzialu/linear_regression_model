@@ -69,7 +69,41 @@ class _PredictionPageState extends State<PredictionPage> {
   final TextEditingController priorScoreController = TextEditingController();
   final TextEditingController yearNumberController = TextEditingController();
 
+  String? selectedDistrict;
   String? selectedProvince;
+
+  // Each district's most recent known Imihigo score (2024/2025) and province sourced from NISR's Imihigo evaluation reports
+
+  final Map<String, Map<String, dynamic>> districtData = {
+    'Bugesera': {'province': 'Eastern', 'score': 72.6},
+    'Burera': {'province': 'Northern', 'score': 66.0},
+    'City of Kigali': {'province': 'Kigali', 'score': 59.3},
+    'Gakenke': {'province': 'Northern', 'score': 74.2},
+    'Gatsibo': {'province': 'Eastern', 'score': 73.5},
+    'Gicumbi': {'province': 'Northern', 'score': 73.0},
+    'Gisagara': {'province': 'Southern', 'score': 76.6},
+    'Huye': {'province': 'Southern', 'score': 68.8},
+    'Kamonyi': {'province': 'Southern', 'score': 72.5},
+    'Karongi': {'province': 'Western', 'score': 67.4},
+    'Kayonza': {'province': 'Eastern', 'score': 65.8},
+    'Kirehe': {'province': 'Eastern', 'score': 72.7},
+    'Muhanga': {'province': 'Southern', 'score': 73.0},
+    'Musanze': {'province': 'Northern', 'score': 64.1},
+    'Ngoma': {'province': 'Eastern', 'score': 77.2},
+    'Ngororero': {'province': 'Western', 'score': 65.0},
+    'Nyabihu': {'province': 'Western', 'score': 54.4},
+    'Nyagatare': {'province': 'Eastern', 'score': 74.3},
+    'Nyamagabe': {'province': 'Southern', 'score': 73.5},
+    'Nyamasheke': {'province': 'Western', 'score': 71.9},
+    'Nyanza': {'province': 'Southern', 'score': 65.6},
+    'Nyaruguru': {'province': 'Southern', 'score': 70.5},
+    'Rubavu': {'province': 'Western', 'score': 62.6},
+    'Ruhango': {'province': 'Southern', 'score': 68.4},
+    'Rulindo': {'province': 'Northern', 'score': 59.1},
+    'Rusizi': {'province': 'Western', 'score': 66.9},
+    'Rutsiro': {'province': 'Western', 'score': 61.0},
+    'Rwamagana': {'province': 'Eastern', 'score': 72.7},
+  };
   final List<String> provinces = [
     'Eastern',
     'Kigali',
@@ -82,7 +116,7 @@ class _PredictionPageState extends State<PredictionPage> {
   bool isLoading = false;
 
   Future<void> predictScore() async {
-    // Basic check: make sure nothing is missing before calling the API
+    // Making sure nothing is missing before calling the API
     if (priorScoreController.text.isEmpty ||
         yearNumberController.text.isEmpty ||
         selectedProvince == null) {
@@ -124,7 +158,7 @@ class _PredictionPageState extends State<PredictionPage> {
           resultText = 'Predicted Score: ${data['predicted_score']}%';
         });
       } else {
-        // The API sent back a validation error or similar - show it plainly
+        // API sends back a validation error
         final data = jsonDecode(response.body);
         setState(() {
           resultText = 'Error: ${data['detail'].toString()}';
@@ -174,6 +208,29 @@ class _PredictionPageState extends State<PredictionPage> {
                 ),
               ),
               const SizedBox(height: 20),
+
+              DropdownButtonFormField<String>(
+                value: selectedDistrict,
+                decoration: const InputDecoration(
+                  labelText: 'District',
+                ),
+                items: districtData.keys.map((district) {
+                  return DropdownMenuItem(
+                    value: district,
+                    child: Text(district),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  if (value == null) return;
+                  final info = districtData[value]!;
+                  setState(() {
+                    selectedDistrict = value;
+                    priorScoreController.text = info['score'].toString();
+                    selectedProvince = info['province'] as String;
+                  });
+                },
+              ),
+              const SizedBox(height: 14),
 
               TextField(
                 controller: priorScoreController,
