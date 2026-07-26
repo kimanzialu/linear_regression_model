@@ -1,6 +1,7 @@
 PAP - District Imihigo Score Prediction 
 
 My Mission:
+
 My mission is to apply my coding skills to develop technologies that empower Rwandan citizens to track their elected officials and make governance more transparent across Rwanda. The model I created in this assignment predicts a district's Imihigo (perfomance contracts signed by local leaders across Rwanda to ensure accountability) score.
 
 The data source:
