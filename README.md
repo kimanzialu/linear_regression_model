@@ -15,7 +15,7 @@ Public endpoint (Swagger UI): https://linear-regression-model-s8me.onrender.com/
 
 Video demo:
 
-YouTube link: TODO
+YouTube link: https://youtu.be/g9xpCkJ3VZY
 
 Running the mobile app:
 
