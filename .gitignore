@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*.egg-info/
+.DS_Store
+uv.lock.bak
+build/
+.dart_tool/
+.flutter-plugin-dependencies
+android/.gradle/
+ios/Pods/
