@@ -24,11 +24,11 @@ by calling the API I created.
 
 a. How to run it:
 
-_cd summative/FlutterApp
+_cd summative/FlutterApp_
 
-flutter pub get
+_flutter pub get_
 
-flutter run_
+_flutter run_
 
 
 b. How to use it:
