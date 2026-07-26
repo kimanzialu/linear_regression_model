@@ -25,7 +25,9 @@ by calling the API I created.
 a. How to run it:
 
 _cd summative/FlutterApp
+
 flutter pub get
+
 flutter run_
 
 
